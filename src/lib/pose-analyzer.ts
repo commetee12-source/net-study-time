@@ -85,8 +85,13 @@ export function analyzePose(landmarks: Landmark[]): PoseAnalysisResult {
   const leftShoulder = landmarks[LEFT_SHOULDER];
   const rightShoulder = landmarks[RIGHT_SHOULDER];
 
-  // 1. 랜드마크가 13개 이상 존재하면 사람이 있다고 판단 (이미 위에서 체크함)
-  // 전면 카메라에서는 visibility/좌표 값이 불안정하므로 추가 체크 생략
+  // 핵심 랜드마크(코, 양 어깨)의 visibility가 매우 낮으면 사람이 거의 안 보이는 것
+  const noseVis = nose.visibility ?? 0;
+  const lShoulderVis = leftShoulder.visibility ?? 0;
+  const rShoulderVis = rightShoulder.visibility ?? 0;
+  if (noseVis < 0.1 && lShoulderVis < 0.1 && rShoulderVis < 0.1) {
+    return defaultResult; // AWAY
+  }
 
   // 2. 어깨 기울기 (수평도)
   const shoulderDx = rightShoulder.x - leftShoulder.x;

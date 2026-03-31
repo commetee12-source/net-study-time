@@ -61,6 +61,18 @@ export function usePoseDetection(options?: UsePoseDetectionOptions) {
   const MAJORITY_THRESHOLD = 3; // 5프레임 중 3개 이상이면 상태 전환
 
   const updateState = useCallback((newState: StudyState, result: PoseAnalysisResult) => {
+    // AWAY는 즉시 전환 (자리비움은 지연 없이 감지해야 함)
+    if (newState === "AWAY") {
+      stateBufferRef.current = ["AWAY", "AWAY", "AWAY"]; // 버퍼도 AWAY로 채움
+      if (lastStateRef.current !== "AWAY") {
+        lastStateRef.current = "AWAY";
+        setCurrentState("AWAY");
+        onStateChangeRef.current?.("AWAY", result);
+      }
+      setAnalysisResult(result);
+      return;
+    }
+
     const buffer = stateBufferRef.current;
     buffer.push(newState);
     if (buffer.length > STATE_BUFFER_SIZE) {
