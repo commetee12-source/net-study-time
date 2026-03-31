@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import type { StudyState } from "@/lib/pose-analyzer";
 
 export interface SessionStats {
@@ -34,15 +34,37 @@ export function useStudyTimer(options: UseStudyTimerOptions) {
   const currentStateRef = useRef<StudyState>("IDLE");
   const lastTickRef = useRef<number>(0);
   const wasDistractedRef = useRef(false);
+  const isPageVisibleRef = useRef(true);
   const onDistractedRef = useRef(onDistracted);
   const onTargetReachedRef = useRef(onTargetReached);
   onDistractedRef.current = onDistracted;
   onTargetReachedRef.current = onTargetReached;
 
+  // Page Visibility API: 앱이 백그라운드로 가면 순공시간 멈춤
+  useEffect(() => {
+    const handleVisibility = () => {
+      isPageVisibleRef.current = document.visibilityState === "visible";
+      if (isPageVisibleRef.current) {
+        // 복귀 시 lastTick을 현재로 리셋하여 백그라운드 시간이 누적되지 않도록
+        lastTickRef.current = Date.now();
+      }
+    };
+    document.addEventListener("visibilitychange", handleVisibility);
+    return () => document.removeEventListener("visibilitychange", handleVisibility);
+  }, []);
+
   const tick = useCallback(() => {
     const now = Date.now();
     const delta = now - lastTickRef.current;
     lastTickRef.current = now;
+
+    // 화면이 안 보이면 AWAY와 동일하게 처리
+    if (!isPageVisibleRef.current) {
+      setTotalElapsed((prev) => prev + delta);
+      setAwayTime((prev) => prev + delta);
+      wasDistractedRef.current = false;
+      return;
+    }
 
     const state = currentStateRef.current;
 
