@@ -257,7 +257,7 @@ export default function Home() {
         {/* Camera Section */}
         <div className="space-y-3">
           {/* Camera Preview - compact on mobile */}
-          <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#060e20] shadow-[0_0_20px_2px_rgba(34,197,94,0.15)]">
+          <div className="relative aspect-[4/3.5] rounded-2xl overflow-hidden bg-[#060e20] shadow-[0_0_20px_2px_rgba(34,197,94,0.15)]">
             <video ref={videoRef} className="hidden" playsInline muted />
             <canvas ref={canvasRef} className="w-full h-full object-contain" />
 
