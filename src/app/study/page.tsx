@@ -4,7 +4,6 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import {
   Play,
   Square,
-  RotateCcw,
   Camera,
   CameraOff,
   Pause,
@@ -290,12 +289,9 @@ export default function Home() {
 
             {/* Session Controls In-Video */}
             {isStarted && !isLoading && (
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2">
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2">
                 <button onClick={handleStop} className="bg-gradient-to-br from-[#4be277] to-[#22c55e] text-[#0b1326] font-bold px-4 py-2 rounded-xl text-sm shadow-lg shadow-[#4be277]/20 active:scale-95 transition-all">
                   종료
-                </button>
-                <button onClick={handleReset} className="bg-[#222a3d]/80 backdrop-blur-md text-[#dae2fd] p-2 rounded-xl active:scale-90 transition-all">
-                  <RotateCcw className="w-4 h-4" />
                 </button>
               </div>
             )}
