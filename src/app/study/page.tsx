@@ -317,7 +317,7 @@ export default function Home() {
             <div className="mt-2 flex gap-5 text-[#bccbb9] text-[10px] uppercase tracking-widest">
               <div className="flex items-center gap-1.5">
                 <Zap className="w-3 h-3 text-[#4be277]" />
-                <span>생산성: {focusPercent}%</span>
+                <span>집중력: {focusPercent}%</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <Pause className="w-3 h-3 text-[#ffba61]" />
