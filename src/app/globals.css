@@ -1,0 +1,82 @@
+/* ── Google Fonts ── */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+/* ── Design Tokens (CSS custom properties) ── */
+:root {
+  /* Status colors */
+  --color-focus: #4be277;
+  --color-distracted: #ef4444;
+  --color-away: #ffba61;
+  --color-idle: #6b7280;
+
+  /* Stitch design tokens */
+  --stai-bg: #0b1326;
+  --stai-primary: #4be277;
+  --stai-primary-dark: #22c55e;
+  --stai-gold: #ffba61;
+  --stai-surface-lowest: #060e20;
+  --stai-surface-low: #131b2e;
+  --stai-surface: #171f33;
+  --stai-surface-high: #222a3d;
+  --stai-surface-highest: #2d3449;
+  --stai-text: #dae2fd;
+  --stai-text-variant: #bccbb9;
+}
+
+/* ── Base ── */
+body {
+  background-color: #0b1326;
+  color: #dae2fd;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Manrope", system-ui, sans-serif;
+}
+
+/* ── Utility Classes ── */
+
+/* Subtle green glow for primary elements */
+.glow-sm {
+  text-shadow: 0 0 10px rgba(75, 226, 119, 0.4);
+  filter: drop-shadow(0 0 6px rgba(75, 226, 119, 0.25));
+}
+
+/* Frosted glass panel */
+.glass-panel {
+  background: rgba(23, 31, 51, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Focus state green glow ring */
+.focus-glow {
+  box-shadow:
+    0 0 12px rgba(75, 226, 119, 0.35),
+    0 0 24px rgba(75, 226, 119, 0.15);
+}
+
+/* ── Animations ── */
+@keyframes pulse-focus {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(75, 226, 119, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(75, 226, 119, 0); }
+}
+
+@keyframes pulse-distracted {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+}
+
+.animate-pulse-focus {
+  animation: pulse-focus 2s ease-in-out infinite;
+}
+
+.animate-pulse-distracted {
+  animation: pulse-distracted 1s ease-in-out infinite;
+}
